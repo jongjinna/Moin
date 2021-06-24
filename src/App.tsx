@@ -1,9 +1,13 @@
 import React from 'react';
-import MakeGrid from './make_grid';
+import UsingFlex from './UsingFlex';
+import UsingGrid from './UsingGrid';
 
 function App() {
   return (
-    <MakeGrid />
+    <div>
+      <UsingFlex></UsingFlex>
+      <UsingGrid></UsingGrid>
+    </div>
   );
 }
 
