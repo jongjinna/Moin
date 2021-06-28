@@ -16,7 +16,6 @@ const Wrapper = styled.div`
   max-width: 940px;
   margin: 0 auto;
   display: grid;
-  justify-content: center;
   justify-items: center;
 `;
 
@@ -44,7 +43,7 @@ const TextItem = styled.div`
   }
 `;
 
-const ImgItem = styled.div`
+const ImgTextItem = styled.div`
   grid-row: 1 / 3;
   grid-column: 2;
   width: 460px;
@@ -65,19 +64,13 @@ const ImgItem = styled.div`
   }
 `;
 
-const ImgandP = styled.div`
-  width: 140px;
-  @media (min-width: 481px) and (max-width: 940px) {
-    width: 68px;
-  }
-  @media (min-width: 320px) and (max-width: 480px) {
-    width: 68px;
-  }
+const ImgText = styled.div`
   & > img {
     width: 96px;
     height: 96px;
     margin-bottom: 20px;
     object-fit: contain;
+    color: white;
     @media (min-width: 481px) and (max-width: 940px) {
       width: 68px;
       height: 68px;
@@ -90,6 +83,7 @@ const ImgandP = styled.div`
     }
   }
   & > p {
+    width: 140px;
     height: 54px;
     margin: 0;
     opacity: 0.9;
@@ -99,11 +93,13 @@ const ImgandP = styled.div`
     text-align: center;
     color: white;
     @media (min-width: 481px) and (max-width: 940px) {
+      width: 68px;
       opacity: 0.7;
       font-size: 14px;
       letter-spacing: -0.12px;
     }
     @media (min-width: 320px) and (max-width: 480px) {
+      width: 68px;
       opacity: 0.7;
       font-size: 14px;
       letter-spacing: -0.12px;
@@ -112,7 +108,7 @@ const ImgandP = styled.div`
 `;
 
 const ButtonItem = styled.button`
-  grid-row: 2;
+  grid-row: auto;
   grid-column: 1;
   align-self: end;
   justify-self: start;
@@ -127,33 +123,40 @@ const ButtonItem = styled.button`
   letter-spacing: -0.13px;
   color: white; 
   @media (min-width: 481px) and (max-width: 940px) {
-    grid-row: 3;
     justify-self: center;
     width: 280px;
     border-radius: 6px;
   }
   @media (min-width: 320px) and (max-width: 480px) {
-    grid-row: 3;
     justify-self: center;
     width: 280px;
     border-radius: 6px;
   }  
 `;
 
-const UsingGrid = () => {
+const CustomerServiceSection = () => {
   return (
   <Container>
     <Wrapper>
       <TextItem>다양한 분야의 비즈니스를 어떻게<br/>지원하고 있는지 알아보세요.</TextItem>
-      <ImgItem>
-        <ImgandP><img></img><p>스타트업<br/>소상공인</p></ImgandP>
-        <ImgandP><img></img><p>이커머스<br/>기업</p></ImgandP>
-        <ImgandP><img></img><p>중소기업<br/>대기업</p></ImgandP>
-      </ImgItem>
+      <ImgTextItem>
+        <ImgText>
+          <img></img>
+          <p>스타트업<br/>소상공인</p>
+        </ImgText>
+        <ImgText>
+          <img></img>
+          <p>이커머스<br/>기업</p>
+        </ImgText>
+        <ImgText>
+          <img></img>
+          <p>중소기업<br/>대기업</p>
+        </ImgText>
+      </ImgTextItem>
       <ButtonItem onClick={()=>{}}>문의하기</ButtonItem>
     </Wrapper>
   </Container>
   )
 }
 
-export default UsingGrid
+export default CustomerServiceSection
