@@ -141,15 +141,15 @@ const CustomerServiceSection = () => {
       <TextItem>다양한 분야의 비즈니스를 어떻게<br/>지원하고 있는지 알아보세요.</TextItem>
       <ImgTextItem>
         <ImgText>
-          <img src = {`https://github.com/ZhongZhen-98/Moin_frontend/tree/main/src/assets/img/svg/icon-startup.svg`} alt="rocket image"></img>
+          <img alt="rocket"></img>
           <p>스타트업<br/>소상공인</p>
         </ImgText>
         <ImgText>
-          <img src = {`https://github.com/ZhongZhen-98/Moin_frontend/tree/main/src/assets/img/svg/icon-ecommerce.svg`} alt="cart image"></img>
+          <img alt="cart"></img>
           <p>이커머스<br/>기업</p>
         </ImgText>
         <ImgText>
-          <img src = {`https://github.com/ZhongZhen-98/Moin_frontend/tree/main/src/assets/img/svg/icon-buiding.svg`} alt="building image"></img>
+          <img alt="building"></img>
           <p>중소기업<br/>대기업</p>
         </ImgText>
       </ImgTextItem>
