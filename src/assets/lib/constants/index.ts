@@ -1,0 +1,1 @@
+export const IMG_SERVER = 'https://img.themoin.com/public'
