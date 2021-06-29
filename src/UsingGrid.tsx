@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { IMG_URL } from '../constants';
+import { PrimaryBorderButton } from '../mds/Buttons'
 
 const Container = styled.div`
   padding: 100px 0;
@@ -21,22 +23,19 @@ const Wrapper = styled.div`
 
 const TextItem = styled.div`
   width: 15em;
-  font-family: NotoSansCJKkr;
   font-size: 32px;
   font-weight: bold;
   line-height: 1.5;
   letter-spacing: -0.27px;
   color: white;
   @media (min-width: 481px) and (max-width: 940px) {
-    font-family: SpoqaHanSansNeo;
-    font-size: 20px; 
+    font-size: 20px;
     line-height: 1.2;
     letter-spacing: -0.2px;
     text-align: center;
   }
   @media (min-width: 320px) and (max-width: 480px) {
-    font-family: SpoqaHanSansNeo;
-    font-size: 20px; 
+    font-size: 20px;
     line-height: 1.2;
     letter-spacing: -0.2px;
     text-align: center;
@@ -70,7 +69,6 @@ const ImgText = styled.div`
     height: 96px;
     margin-bottom: 20px;
     object-fit: contain;
-    color: white;
     @media (min-width: 481px) and (max-width: 940px) {
       width: 68px;
       height: 68px;
@@ -87,7 +85,6 @@ const ImgText = styled.div`
     height: 54px;
     margin: 0;
     opacity: 0.9;
-    font-family: NotoSansCJKkr;
     font-size: 18px;
     letter-spacing: -0.15px;
     text-align: center;
@@ -104,59 +101,75 @@ const ImgText = styled.div`
       font-size: 14px;
       letter-spacing: -0.12px;
     }
-  } 
+  }
 `;
 
-const ButtonItem = styled.button`
+const ButtonItem = styled(PrimaryBorderButton)`
   grid-row: auto;
   grid-column: 1;
   align-self: end;
   justify-self: start;
   width: 160px;
   height: 48px;
-  border-radius: 4px;
-  border: solid 1px white;
+  border-color: white;
   background-color: transparent;
-  font-family: NotoSansCJKkr;
-  font-size: 16px;
-  line-height: 1.25;
-  letter-spacing: -0.13px;
-  color: white; 
+  color: white;
   @media (min-width: 481px) and (max-width: 940px) {
     justify-self: center;
     width: 280px;
-    border-radius: 6px;
   }
   @media (min-width: 320px) and (max-width: 480px) {
     justify-self: center;
     width: 280px;
-    border-radius: 6px;
-  }  
+  }
 `;
 
 const CustomerServiceSection = () => {
   return (
-  <Container>
-    <Wrapper>
-      <TextItem>다양한 분야의 비즈니스를 어떻게<br/>지원하고 있는지 알아보세요.</TextItem>
-      <ImgTextItem>
-        <ImgText>
-          <img alt="rocket"></img>
-          <p>스타트업<br/>소상공인</p>
-        </ImgText>
-        <ImgText>
-          <img alt="cart"></img>
-          <p>이커머스<br/>기업</p>
-        </ImgText>
-        <ImgText>
-          <img alt="building"></img>
-          <p>중소기업<br/>대기업</p>
-        </ImgText>
-      </ImgTextItem>
-      <ButtonItem onClick={()=>{}}>문의하기</ButtonItem>
-    </Wrapper>
-  </Container>
-  )
-}
+    <Container>
+      <Wrapper>
+        <TextItem>
+          다양한 분야의 비즈니스를 어떻게
+          <br />
+          지원하고 있는지 알아보세요.
+        </TextItem>
+        <ImgTextItem>
+          <ImgText>
+            <img src={`${IMG_URL}/landing/Customer_service/icon-startup.svg`} alt='rocket' />
+            <p>
+              스타트업
+              <br />
+              소상공인
+            </p>
+          </ImgText>
+          <ImgText>
+            <img src={`${IMG_URL}/landing/Customer_service/icon-ecommerce.svg`} alt='cart' />
+            <p>
+              이커머스
+              <br />
+              기업
+            </p>
+          </ImgText>
+          <ImgText>
+            <img src={`${IMG_URL}/landing/Customer_service/icon-buiding.svg`} alt='building' />
+            <p>
+              중소기업
+              <br />
+              대기업
+            </p>
+          </ImgText>
+        </ImgTextItem>
+        <ButtonItem
+          status='normal'
+          onClick={() => {
+            window.hasOwnProperty('ChannelIO') ? window.ChannelIO('show') : null;
+          }}
+        >
+          문의하기
+        </ButtonItem>
+      </Wrapper>
+    </Container>
+  );
+};
 
-export default CustomerServiceSection
+export default CustomerServiceSection;
