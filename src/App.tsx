@@ -1,13 +1,9 @@
 import React from 'react';
-import UsingFlex from './UsingFlex';
-import UsingGrid from './UsingGrid';
+import UsingGrid from './CustomerServiceSection';
 
 function App() {
   return (
-    <div>
-      <UsingFlex></UsingFlex>
-      <UsingGrid></UsingGrid>
-    </div>
+    <UsingGrid />
   );
 }
 

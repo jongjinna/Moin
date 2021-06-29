@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { IMG_URL } from '../constants';
-import { PrimaryBorderButton } from '../mds/Buttons'
+import { IMG_URL } from '@/model'; // 이미지 주소
+import { PrimaryBorderButton } from 'src/assets/mds/Buttons'; // 위치만 확인
 
 const Container = styled.div`
   padding: 100px 0;
@@ -162,7 +162,7 @@ const CustomerServiceSection = () => {
         <ButtonItem
           status='normal'
           onClick={() => {
-            window.hasOwnProperty('ChannelIO') ? window.ChannelIO('show') : null;
+            window.hasOwnProperty('ChannelIO') ? window.ChannelIO('show') : null; // 채널톡으로 이동
           }}
         >
           문의하기
