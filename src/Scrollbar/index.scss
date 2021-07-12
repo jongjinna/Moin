@@ -1,0 +1,11 @@
+// 내가 수정한 부분만
+
+body {
+
+  ::-webkit-scrollbar {
+    width: 0;
+    display: none;
+  }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
