@@ -162,7 +162,7 @@ const CustomerServiceSection = () => {
         <ButtonItem
           status='normal'
           onClick={() => {
-            window.hasOwnProperty('ChannelIO') ? window.ChannelIO('show') : null; // 채널톡으로 이동
+            window.hasOwnProperty('ChannelIO') ? window.ChannelIO('showMessenger') : null; // 채널톡으로 이동
           }}
         >
           문의하기
