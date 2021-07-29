@@ -9,9 +9,7 @@ import Head from "./Head";
 const Moinseminar = () => {
   return (
     <div>
-      <Head />
       <Connect />
-      <Title />
     </div>
   );
 };
