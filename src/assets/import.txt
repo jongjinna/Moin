@@ -1,4 +1,0 @@
-import * as THREE from 'three'
-import React, { Suspense, useRef, useState, useMemo } from 'react'
-import styled from 'styled-components'
-import { Canvas, useFrame, useLoader, useThree, ReactThreeFiber, extend,  } from '@react-three/fiber'
