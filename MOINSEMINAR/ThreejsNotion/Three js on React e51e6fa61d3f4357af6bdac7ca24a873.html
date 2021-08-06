@@ -1,0 +1,793 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Three.js on React</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="dd4ad229-8a08-44da-8103-c6cb568bb035" class="page sans"><header><img class="page-cover-image" src="Three%20js%20on%20React%20e51e6fa61d3f4357af6bdac7ca24a873/ezgif.com-gif-maker_(2)%201.gif" style="object-position:center 50%"/><h1 class="page-title">Three.js on React</h1></header><div class="page-body"><p id="9946c63c-c84d-4d16-a0ca-76f31a327389" class="">
+</p><p id="0d35fb92-88e7-443a-a265-590c93ab47b8" class="">안녕하세요. 모인 개발팀 인턴 나종진입니다. 이번 글을 통해 인턴 기간 동안 제가 배운 내용을 공유하고자 합니다.</p><p id="5c2dc026-89c8-45fa-941c-25e4a244f422" class="">최근 모인은<mark class="highlight-orange"> </mark>랜딩 페이지 리뉴얼을 진행했습니다. 리뉴얼 과정 중 D3.js를 이용해 3D 디자인으로 송금 가능한 국가를 표현했습니다. D3.js는 데이터의 시각화를 인터랙티브하게 보여줄 때 사용되며 보통 차트를 만들 때 이용되지만 간단한 3D 인터랙티브 구현도 가능한 라이브러리입니다. 이번 모인의 랜딩 페이지 개선에서는 간단한 3D 인터랙티브 구현이 필요했고 이는 D3.js로 충분히 가능했습니다. 하지만 디자인의 니즈가 점점 더 복잡해지고, 다양해지면 이 니즈를 충족하기에는 부족함이 있습니다. 그래서 더 복잡하고 다양한 기능을 구현하기 위해 3D 렌더링에 특화되어 있는 라이브러리가 필요하였고 그 기능을 하는 Three.js에 대해 공부하게 되었습니다.</p><p id="7e7f1913-7914-4821-abe3-37cc58e53b09" class="">이번 블로그 글을 통해 Three.js를 학습한 내용을 정리 및 공유하고,  특히 모인에서 사용하는 React 환경에서 사용할 수 있는 방법을 공유하겠습니다.</p><p id="c4b4025a-e830-4bd9-82bc-0a97aabad421" class="">
+</p><h2 id="e5d54e5b-fcde-45dc-ad13-957308115777" class="">Three.js</h2><p id="ae823dcc-a2e0-4011-ad00-a19588e584fb" class="">Three.js는 WebGL을 사용하여 3D 객체를 웹사이트에 쉽게 렌더링 할 수 있도록 도와주는 자바스크립트 언어의 라이브러리입니다. 현재 웹 디자인, 게임, 제품 모델링 등 다양한 기능으로 사용되고 있습니다.</p><h3 id="751d2d91-08d3-4db2-b593-f548fa0e47d7" class="">구조</h3><p id="a82a1319-ec3e-4323-9ec3-5fd887d5f395" class="">Three.js의 구조는 아래 사진을 통해 확인할 수 있습니다. 크게 Renderer, Scene, Camera, Light, Mesh, Geometry, Material로 구성됩니다.</p><div id="f3e8130f-7b16-4394-ba4c-e6031477f00d" class="column-list"><div id="347d2bab-c1ce-4636-ab03-7812c84c525a" style="width:50%" class="column"><figure id="e51e6fa6-1d3f-4357-af6b-dac7ca24a873" class="image"><a href="Three%20js%20on%20React%20e51e6fa61d3f4357af6bdac7ca24a873/Untitled.png"><img style="width:336px" src="Three%20js%20on%20React%20e51e6fa61d3f4357af6bdac7ca24a873/Untitled.png"/></a></figure></div><div id="3b41cc2c-5a97-42be-8dba-731f7127e0b0" style="width:50%" class="column"><figure id="8d614f42-8c92-472d-97b3-5db376c6c335" class="image"><a href="Three%20js%20on%20React%20e51e6fa61d3f4357af6bdac7ca24a873/Untitled%201.png"><img style="width:288px" src="Three%20js%20on%20React%20e51e6fa61d3f4357af6bdac7ca24a873/Untitled%201.png"/></a></figure></div></div><p id="df04af70-e322-468b-a943-32890eb9e163" class="">간단하게 축구공을 예시로 Three.js의 구조를 설명하겠습니다. Geometry는 객체의 모양, 즉 축구공의 구 모양을 나타냅니다. Material은 객체의 질감 및 색상, 즉 축구공의 고무 질감과 검은색, 하얀색 등을 나타냅니다. Geometry와 Material을 Mesh로 묶어주면서 축구공이라는 물체, 3D 객체가 완성이 됩니다. 하지만 축구공을 보기 위해서는 공만 필요한 것이 아닙니다. 축구공을 볼 사람의 눈과 빛 그리고 축구공을 놓을 장소가 필요합니다. 이는 각각 Camera, Light, Scene이 담당합니다.  이들을 Renderer가 렌더링 하는 과정을 통해 축구공을 웹 사이트에 나타낼 수 있습니다. </p><p id="1c52f3bf-1ec7-4199-bf8c-1e8b6e35a13e" class="">
+</p><h3 id="7064c766-5d8d-4034-8cd5-9ba4c431605e" class="">기능</h3><p id="8b128845-22e3-4d16-b4d9-e91d1d80658b" class="">Three.js는 다양한 기능을 제공합니다. 2차원 평면부터 다면체, Text, 그 외적인 기하학적 모양 등 다양한 Geometry와 점과 선으로 나타내는 것 부터 광택이 없거나, 물리엔진 기반 모델 등 다양한 Material을 제공합니다. 빛의 경우도 전체를 다 비추는 빛부터, 특정 지역을 비추는 빛까지 다양한 빛을 제공합니다. 그 외적으로 카메라, 로더, 오디오, 애니메이션 등 다양한 기능을 제공합니다.</p><p id="5db1ef3e-b545-4167-9a87-923c4112ee5c" class="">Three.js의 다양한 기능과 사용방법 및 예시는 아래 사이트에서 참고할 수 있습니다.</p><figure id="e54ea89f-f830-4425-b1ae-2f9e74b9bffb"><a href="https://threejs.org/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Three.js - JavaScript 3D library</div></div><div class="bookmark-href"><img src="https://threejs.org/files/favicon.ico" class="icon bookmark-icon"/>https://threejs.org/</div></div><img src="https://threejs.org/files/share.png" class="bookmark-image"/></a></figure><p id="32248fa2-66ab-4d93-950f-7f177fc0b263" class="">
+</p><h2 id="9d172bad-e3f8-4439-9904-3d17f406a93c" class="">Three.js on React</h2><p id="2144e9bf-2eed-458d-8d1d-2fcf5cdfbca0" class="">모인에서 사용하고 있는 React 환경에서는 Three.js 대신 react-three-fiber를 사용합니다. react-three-fiber는 React에서 Three.js를 사용할 수 있도록 만든 라이브러리로 Three.js의 모든 기능을 제공합니다. 하지만 Three.js와 사용방법이 약간 달라 그 차이를 이해하고 사용해야 합니다.</p><p id="16ecb0f1-16f9-4e46-bdd2-cdd32b658637" class="">
+</p><p id="b3d5ecba-dd60-4f5f-9d96-992eb14eb8c0" class="">Three.js 와 react-three-fiber의 가장 큰 차이는 3가지로 볼 수 있습니다.</p><ol type="1" id="587d4f00-e7cc-47f6-8ed1-f309ba47660f" class="numbered-list" start="1"><li>Three.js의 <code>scene</code>과 <code>render</code>는 react-three-fiber의 <code>Canvas</code>로 대체됩니다.</li></ol><ol type="1" id="b6f1c137-81b1-4825-a2a0-f0683d79294b" class="numbered-list" start="2"><li>Three.js의  <code>mesh</code>는 react-three-fiber에서는 <code>&lt;mesh&gt;</code>로 대체됩니다.</li></ol><ol type="1" id="13c18ff9-8fb5-41a7-9f20-b641eca8d384" class="numbered-list" start="3"><li>움직임을 나타내는 <code>requestAnimationFrame</code>은 <code>useFrame</code>으로 대체됩니다.</li></ol><p id="0e053d0c-90f1-4928-abc2-2a5e3d77e1f2" class="">
+</p><p id="fb2dd81f-dcfd-4b20-a4b6-9ef9290fca28" class="">이 차이를 생각하고 아래 예시를 통해 react-three-fiber의 사용법을 살펴보겠습니다.</p><p id="826d0480-fb52-49bc-8244-3b2450e4387d" class="">
+</p><h3 id="4bd21801-8a91-4233-a4fe-ac87e2b6e09e" class="">1. React-three-fiber 사용 방식</h3><p id="466341f4-7215-4aac-8c08-384adb62f07d" class="">간단한 큐브 모양 만드는 예시를 통해 react-three-fiber 사용법을 설명하겠습니다. </p><pre id="bcd3456f-6054-43e2-940f-6cb39ab30509" class="code"><code>import * as THREE from &#x27;three&#x27;
+import React, { useRef } from &#x27;react&#x27;
+import { Canvas, useFrame, useThree } from &#x27;@react-three/fiber&#x27;
+
+function Box(props: JSX.IntrinsicElements[&#x27;mesh&#x27;]) {
+  const mesh = useRef&lt;THREE.Mesh&gt;(null!)
+  useFrame((state, delta) =&gt; {
+    mesh.current.rotation.x += 0.02;
+    mesh.current.rotation.y += 0.02;
+    mesh.current.rotation.z += 0.02;
+  }
+    )
+	return (
+    &lt;mesh
+      {...props}
+      ref={mesh}
+		&gt;
+      &lt;boxGeometry args={[1, 1, 1]} /&gt;
+      &lt;meshStandardMaterial color=&#x27;orange&#x27; /&gt;
+    &lt;/mesh&gt;
+  )
+}
+
+const BOX = () =&gt; {
+  return (
+    &lt;div&gt;
+      &lt;Canvas
+				camera={{ fov: 75, near: 1, far: 5000, position: [0, 0, 5] }}
+			&gt;
+        &lt;ambientLight /&gt;
+        &lt;Box position={[0, 0, 0]} /&gt;
+      &lt;/Canvas&gt;
+    &lt;/div&gt;
+  )
+};
+
+export default BOX</code></pre><p id="8bade3f2-8e2c-45c1-9de1-dfd99f75c104" class="">사용하고자 하는 모양(Geometry)과 질감 및 색(Material)을 <code>&lt;mesh&gt;</code>로 묶어줍니다. 위 예시에서는 <code>boxGeometry</code>와 <code>meshStandardMaterial</code>을 사용했습니다. 그리고 <code>&lt;Canvas&gt;</code> 컴포넌트 안에 카메라, 빛과 함께 <code>&lt;mesh&gt;</code>의 내용을 넣어주면 됩니다. 움직임은 <code>useFrame</code>으로 적용시켰습니다.</p><figure id="c542f9aa-4dd5-459c-93ed-daff8bf18873" class="image"><a href="Three%20js%20on%20React%20e51e6fa61d3f4357af6bdac7ca24a873/ezgif.com-gif-maker_(1).gif"><img style="width:218px" src="Three%20js%20on%20React%20e51e6fa61d3f4357af6bdac7ca24a873/ezgif.com-gif-maker_(1).gif"/></a></figure><p id="f6ae74a9-0334-497d-ae5f-ba935fa44dd5" class="">위 예시에 Geometry, Material, Light 등을 바꿔 다양한 모양의 간단한 3D 모델을 표현할 수 있습니다.</p><p id="ad9a734e-a6de-4a7f-9280-76f288563cb2" class="">
+</p><h3 id="e86300db-a9b1-4944-aadf-68f3d172a089" class="">2. 이미지 로드 방식</h3><p id="5365e5f8-4040-4128-ae27-7a13798b6c03" class="">Three.js에서 제공하는 Material은 색상과 빛에 따른 그림자로 질감 및 색을 표현합니다. 따라서 구겨진 종이, 나무, 풀 등 다양한 색상 및 질감을 표현하기에는 한계가 있습니다. 이 부족한 질감 및 색을 이미지를 통해 표현할 수 있습니다.</p><p id="da718182-3ab8-4c2a-ab33-e2bc8a8380fd" class="">
+</p><p id="072c33f6-747d-4a88-9c8c-9c6d25f142d0" class="">아래 사진은 <code>&lt;sphereBufferGeometry&gt;</code>를 사용하여 만든 구 모양입니다. 왼쪽은 react-three-fiber가 제공하는 <code>meshStandardMaterial</code>을 사용했고, 오른쪽은 그 위에 세계지도 사진을 mapping 한 것입니다.</p><figure id="f38210ca-cad8-4ae3-ac43-ca486a6f5578" class="image"><a href="Three%20js%20on%20React%20e51e6fa61d3f4357af6bdac7ca24a873/Untitled%202.png"><img style="width:432px" src="Three%20js%20on%20React%20e51e6fa61d3f4357af6bdac7ca24a873/Untitled%202.png"/></a></figure><p id="2c2f1db8-29e3-477b-8a92-4a423842917b" class="">외부 이미지를 사용하면 이렇게 다양한 표현이 가능해집니다.</p><p id="04be6446-0b77-4d0f-8a25-8341d20425f9" class="">
+</p><p id="eff7e355-f7cd-4673-a32c-8944be4c91a6" class="">이미지를 가지고 오는 방법은 주사위를 만드는 예시를 통해 설명하겠습니다.</p><pre id="bab2be54-4ea1-49d7-9cb7-c3882ebc2c2a" class="code"><code>import * as THREE from &#x27;three&#x27;
+import React, { Suspense, useRef } from &#x27;react&#x27;
+import { Canvas, useFrame, useLoader } from &#x27;@react-three/fiber&#x27;
+import texture_1 from &#x27;../imgs/dice1.jpeg&#x27;
+import texture_2 from &#x27;../imgs/dice2.jpeg&#x27;
+import texture_3 from &#x27;../imgs/dice3.jpeg&#x27;
+import texture_4 from &#x27;../imgs/dice4.jpeg&#x27;
+import texture_5 from &#x27;../imgs/dice5.jpeg&#x27;
+import texture_6 from &#x27;../imgs/dice6.jpeg&#x27;
+
+function Shape(props: JSX.IntrinsicElements[&#x27;mesh&#x27;]) {
+  const mesh = useRef&lt;THREE.Mesh&gt;(null!)
+  const [Dice_1, Dice_2, Dice_3, Dice_4, Dice_5, Dice_6] = useLoader(THREE.TextureLoader, [texture_1, texture_2, texture_3, texture_4, texture_5, texture_6])
+  useFrame((state, delta) =&gt; {
+    mesh.current.rotation.x += 0.01;
+    mesh.current.rotation.y += 0.01;
+    mesh.current.rotation.z += 0.01;
+  })
+  return (
+    &lt;mesh
+      {...props}
+      ref={mesh}&gt;
+      &lt;boxBufferGeometry attach=&quot;geometry&quot; /&gt;
+      &lt;meshStandardMaterial map={Dice_1} attachArray=&quot;material&quot; /&gt;
+      &lt;meshStandardMaterial map={Dice_2} attachArray=&quot;material&quot; /&gt;
+      &lt;meshStandardMaterial map={Dice_3} attachArray=&quot;material&quot; /&gt;
+      &lt;meshStandardMaterial map={Dice_4} attachArray=&quot;material&quot; /&gt;
+      &lt;meshStandardMaterial map={Dice_5} attachArray=&quot;material&quot; /&gt;
+      &lt;meshStandardMaterial map={Dice_6} attachArray=&quot;material&quot; /&gt;
+    &lt;/mesh&gt;
+  )
+}
+
+const DICE = () =&gt; {
+  return (
+    &lt;div&gt;
+      &lt;Canvas style={{ height: &#x27;100vh&#x27;, width: &#x27;100vw&#x27; }} camera={{ position: [0, 0, 5] }}&gt;
+          &lt;ambientLight /&gt;
+          &lt;Suspense fallback={null}&gt;
+            &lt;Shape position={[0, 0, 0]} /&gt;
+          &lt;/Suspense&gt;
+      &lt;/Canvas&gt;
+    &lt;/div&gt;
+  )
+};
+
+export default DICE</code></pre><p id="c74b3c4f-1a16-4873-bd94-5e15c6692f19" class="">react-three-fiber의 <code>useLoader</code>를 이용하여 이미지를 불러옵니다. 불러온 이미지를 Material에 mapping 해줍니다. 이때, Geometry와 Material에 <code>attach</code>를 각각 넣어줍니다.</p><p id="57d90bbe-8e37-49ad-88b7-fb35e12bb77e" class="">위 예시는 큐브의 6면에 각각 사진을 넣는 예시이므로 <code>attachArray</code>를 사용했습니다. 모든 면을 하나의 사진으로 적용하려면, <code>&lt;meshStandardMaterial map={Dice} attach=&quot;material&quot; /&gt;</code> 이 내용으로 대체하면 됩니다.</p><figure id="a70d9fde-4722-4efe-8283-d482ea8751c4" class="image"><a href="Three%20js%20on%20React%20e51e6fa61d3f4357af6bdac7ca24a873/ezgif.com-gif-maker.gif"><img style="width:316px" src="Three%20js%20on%20React%20e51e6fa61d3f4357af6bdac7ca24a873/ezgif.com-gif-maker.gif"/></a></figure><p id="52e8595d-3645-4707-918d-3bf8bfa6bd86" class="">위 예시와 다르게 3D 모델이 아닌 평면 geometry에 질감 이미지를 추가하여, 바닥과 벽면 등으로 만들 수 있습니다.</p><p id="7509f297-07ff-422a-a95b-81639edeb227" class="">
+</p><h3 id="0de429c0-4356-4bf3-894f-87da09e3c23e" class="">3. 3D 모델 로드 방식</h3><p id="19111e33-11b2-4094-94cc-3c638069828a" class="">Three.js는 3D 객체를 렌더링 해주는 라이브러리로 Three.js에서 제공하는 Geometry를 이용해 간단한 3D 모델을 만드는 것은 가능하지만 복잡한 3D 모델을 만드는 것은 쉽지 않습니다. 그래서 다채로운 표현을 위해 외부에서 만든 3D 모델을 가지고 오게 됩니다.</p><p id="28755b89-8f75-4ba1-bddd-a3cf6cebe6eb" class="">Three.js는 다양한 3D 파일 포맷의 loader를 지원합니다. 그중 GLTF 방식은 전송이 쉽고 로드가 빠르며 Geometry와 Material을 한 번에 가지고 오는 장점이 있습니다. 이러한 장점 때문에 GLTFLoader 사용을 추천합니다.</p><p id="67339d4a-faff-47dd-afa9-7c8f00d57387" class="">
+</p><p id="2f016b9b-0644-4a26-b037-587a3746938b" class="">GLTF 방식으로 3D 객체를 외부에서 가지고 오는 방법입니다. </p><pre id="6af04397-da34-4e25-8cca-b06e94dc5101" class="code"><code>npx gltfjsx model.gltf --types</code></pre><p id="9e5926cf-91a8-4934-977d-905daaffcb76" class="">먼저 위 방법을 통해 gltf 및 glb 파일을 tsx 파일로 변환해 줍니다.</p><p id="96fedbcd-0e1e-486b-ad33-7bad3f2a00d6" class="">
+</p><pre id="35f78dac-aed4-45d3-a27c-7721a5dc1442" class="code"><code>import * as THREE from &#x27;three&#x27;
+import React, { useRef } from &#x27;react&#x27;
+import { useGLTF } from &#x27;@react-three/drei&#x27;
+import { GLTF } from &#x27;three/examples/jsm/loaders/GLTFLoader&#x27;
+
+type GLTFResult = GLTF &amp; {
+  nodes: {
+    Cloud_1: THREE.Mesh
+  }
+  materials: {}
+}
+
+export default function Model(props: JSX.IntrinsicElements[&#x27;group&#x27;]) {
+  const group = useRef&lt;THREE.Group&gt;()
+  const { nodes, materials } = useGLTF(&#x27;/Cloud_1.glb&#x27;) as GLTFResult
+  return (
+    &lt;group ref={group} {...props} dispose={null}&gt;
+      &lt;mesh geometry={nodes.Cloud_1.geometry} material={nodes.Cloud_1.material} scale={0.77} /&gt;
+    &lt;/group&gt;
+  )
+}
+
+useGLTF.preload(&#x27;/Cloud_1.glb&#x27;)</code></pre><p id="8b60fb04-ee25-4df3-8e21-910810e8e74e" class="">변환된 tsx 파일에는 type과 함께 <code>&lt;mesh&gt;</code>안에 <code>geometry</code>와 <code>material</code>이 있습니다. </p><p id="59cd7415-4a8a-473e-b05d-ecce640092c1" class="">
+</p><pre id="19a0d744-0056-49eb-908e-eac565b02a7e" class="code"><code>import * as THREE from &quot;three&quot;;
+import React, { Suspense, useRef } from &quot;react&quot;;
+import { useGLTF } from &quot;@react-three/drei&quot;;
+import { useFrame } from &#x27;@react-three/fiber&#x27;
+import { GLTF } from &quot;three/examples/jsm/loaders/GLTFLoader&quot;;
+import Cloud_1 from &quot;../../Cloud_1.glb&quot;;
+
+type GLTFResult = GLTF &amp; {
+  nodes: {
+    Cloud_1: THREE.Mesh;
+  };
+};
+
+const Model = (props: JSX.IntrinsicElements[&quot;group&quot;]) =&gt; {
+  const group = useRef&lt;THREE.Group&gt;(null);
+  const { nodes } = useGLTF(Cloud_1) as GLTFResult;
+  return (
+    &lt;group ref={group} {...props} dispose={null}&gt;
+      &lt;Suspense fallback={null}&gt;
+        &lt;mesh
+          geometry={nodes.Cloud_1.geometry}
+          material={nodes.Cloud_1.material}
+					scale={0.77}
+        /&gt;  
+      &lt;/Suspense&gt;
+    &lt;/group&gt;
+  );
+}</code></pre><figure id="d85158bc-1970-4a1e-8437-3d22b45fc774" class="image"><a href="Three%20js%20on%20React%20e51e6fa61d3f4357af6bdac7ca24a873/ezgif.com-gif-maker_(2).gif"><img style="width:600px" src="Three%20js%20on%20React%20e51e6fa61d3f4357af6bdac7ca24a873/ezgif.com-gif-maker_(2).gif"/></a></figure><p id="1a8d7e25-8890-4192-8276-ccc728bf0f86" class="">변환한 내용을 위 예시처럼 넣어주면 간단한 방법으로 외부 3D 모델을 가지고 올 수 있습니다.</p><p id="615670e8-9c21-4be9-8209-7799e8e7b67f" class="">
+</p><h3 id="57e4bf13-e9be-43f1-94ef-11534b093e94" class="">4. 주의사항</h3><p id="ec3d9905-5a55-41d6-bcad-09427772a495" class="">위처럼 이미지 및 3D 모델을 외부에서 load 할 경우 <code>&lt;Suspense&gt;</code>를 사용해야 합니다. </p><p id="e9eccaa3-ae30-4d0d-a1a3-03dc53865b3a" class=""><code>&lt;Suspense&gt;</code>는 컴포넌트가 렌더링 될 때까지 기다려 주는 역할을 합니다. <code>&lt;Suspense&gt;</code>를 사용하지 않으면 React가 데이터가 준비되지 않은 상황에서 UI를 갱신하기 때문에 다음과 같은 에러가 발생하게 됩니다.  </p><p id="2d570f30-8ea6-48b1-b6d4-97015fcfedae" class=""><code>The above error occurred in the &lt;ForwardRef(Canvas)&gt; component:</code></p><p id="477f293d-fbb4-47f7-877b-9a7fdcbe992c" class=""><code>Uncaught Error: ForwardRef(Canvas) suspended while rendering, but no fallback UI was specified.</code></p><p id="bdddbc93-c599-42e8-b865-e19bd2508c5e" class="">
+</p><p id="e798564c-d1c7-4048-bc99-8e36fda4bce7" class="">따라서 다음과 같이 <code>&lt;Suspense&gt;</code>를 사용해야 합니다.</p><pre id="6b3926ed-c7ad-43d7-a32a-15037212fcc3" class="code"><code>import React, { Suspense } from &quot;react&quot;;
+
+&lt;Suspense fallback={...}&gt;
+	&lt;mesh&gt;
+		...
+	&lt;/mesh&gt; 
+&lt;/Suspense&gt;</code></pre><p id="5f3821a8-80cd-4fbe-858b-97002d1de12e" class="">
+</p><p id="5e75f70b-4e49-468d-869e-05ddfc1b5b30" class="">Suspense를 사용해야 되는 이유는 다음 사이트에서 더 자세히 확인할 수 있습니다.</p><figure id="60e288c4-35a2-4013-8f9c-af6487a231e6"><a href="https://reactjs.org/docs/concurrent-mode-suspense.html#what-is-suspense-exactly" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Suspense for Data Fetching (Experimental) - React</div><div class="bookmark-description">Caution: This page was about experimental features that aren&#x27;t yet available in a stable release. It was aimed at early adopters and people who are curious. Much of the information on this page is now outdated and exists only for archival purposes. Please refer to the React 18 Alpha announcement post for the up-to-date information.</div></div><div class="bookmark-href"><img src="https://reactjs.org/favicon-32x32.png?v=f4d46f030265b4c48a05c999b8d93791" class="icon bookmark-icon"/>https://reactjs.org/docs/concurrent-mode-suspense.html#what-is-suspense-exactly</div></div><img src="https://reactjs.org/logo-og.png" class="bookmark-image"/></a></figure><p id="ffe82ac3-c324-44f3-85b4-10ec51752145" class="">
+</p><h2 id="42ca7c61-6d6c-4933-9fe6-362b6fd2ff79" class="">마무리</h2><p id="c2d7d22c-19fd-4f2d-8ac4-1a1c8f336c2f" class="">이렇게 React 환경에서 Three.js를 사용하는 방법에 대해서 살펴보았습니다.</p><p id="c9bc8d7a-6500-4272-b3a9-922b9afbbc4b" class="">Three.js를 이용하여 웹과 앱을 더 다채롭게 꾸밀 수 있을 것으로 생각됩니다. 하지만 3D 객체를 렌더링하기 때문에 로딩 시간이 오래 걸리는 문제가 발생하였고, 이를 최적화할 수 있는 방법에 대해 생각해봐야 합니다.</p><p id="f2d3f2bb-49f6-4680-92a7-1ab077321a71" class="">Three.js에 비해 react-three-fiber에 대한 사용법이 많이 알려지지 않아 공부하면서 많은 시행착오를 겪었습니다. 기본적인 Three.js를 react-three-fiber로 바꾸는 것은 관련 문서가 많이 있었지만 그 외적으로 외부 파일을 load 하거나 light의 target을 지정하는 방법 등 react-three-fiber를 사용하는 문서가 많이 부족했습니다. 따라서 React에서 Three.js를 사용할 때 관련 문서가 적은 것이 가장 큰 문제일 것으로 생각됩니다. 그래서 많은 React 개발자 분들이 Three.js의 기능을 느끼지 못했을 것으로 생각됩니다. 이 글을 통해 react-three-fiber에 더 쉽게 접근하여 React 개발자 분들이 Three.js의 강력하고 다양한 기능을 사용해보길 바랍니다.</p><p id="29df3519-2d00-4a39-a511-9c677d2f1b5b" class="">
+</p><p id="98297249-a387-4d40-a01c-c3648346f8ef" class="">감사합니다. ^^</p><p id="31b45c53-0cbf-4240-b678-85f96d252685" class="">
+</p></div></article></body></html>
