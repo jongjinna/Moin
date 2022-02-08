@@ -21,11 +21,7 @@
     "jsx": "react-jsx"
   },
   "include": [
-<<<<<<< HEAD
     "src",
     "./src/assets/imgs/declaration.d.ts"
-=======
-    "src"
->>>>>>> Moin_frontend/main
   ]
 }
